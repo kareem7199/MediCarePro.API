@@ -3,8 +3,11 @@ using MediCarePro.API.Errors;
 using MediCarePro.API.Middlewares;
 using MediCarePro.BLL;
 using MediCarePro.BLL.AuthService;
+using MediCarePro.BLL.SpecialtyService;
 using MediCarePro.DAL.Data;
 using MediCarePro.DAL.Data.Entities;
+using MediCarePro.DAL.Interfaces;
+using MediCarePro.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +23,8 @@ namespace MediCarePro.API.Extensions
 			services.AddAutoMapper(typeof(MappingProfile));
 
 			services.AddScoped(typeof(IAuthService), typeof(AuthService));
+			services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+			services.AddScoped(typeof(ISpecialtyService) , typeof(SpecialtyService));
 
 			services.AddScoped<ExceptionMiddleware>();
 
