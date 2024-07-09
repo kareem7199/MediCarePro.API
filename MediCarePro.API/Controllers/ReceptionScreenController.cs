@@ -1,10 +1,12 @@
 ﻿using MediCarePro.BLL.SpecialtyService;
 using MediCarePro.DAL.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediCarePro.API.Controllers
 {
+	[Authorize(Roles = "Reception")]
 	public class ReceptionScreenController : BaseApiController
 	{
 		private readonly ISpecialtyService _specialtyService;
