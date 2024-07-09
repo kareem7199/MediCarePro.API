@@ -2,6 +2,7 @@
 using MediCarePro.API.Extensions;
 using MediCarePro.API.Middlewares;
 using MediCarePro.DAL.Data;
+using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -56,6 +57,12 @@ namespace MediCarePro.API
 			try
 			{
 				await _dbContext.Database.MigrateAsync();
+
+				var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+				var userManager = services.GetRequiredService<UserManager<Account>>();
+
+				await StoreContextSeeder.SeedRolesAsync(roleManager);
+				await StoreContextSeeder.SeedUsersAsync(userManager , _dbContext);
 			}
 			catch (Exception ex)
 			{

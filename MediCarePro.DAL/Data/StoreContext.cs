@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using MediCarePro.DAL.Data.Entities;
@@ -16,6 +17,13 @@ namespace MediCarePro.DAL.Data
 		{
 
 		}
-        public DbSet<Specialty> Specialties { get; set; }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+			base.OnModelCreating(modelBuilder);
+		}
+
+		public DbSet<Specialty> Specialties { get; set; }
     }
 }

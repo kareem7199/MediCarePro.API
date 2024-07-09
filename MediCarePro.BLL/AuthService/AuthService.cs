@@ -29,7 +29,7 @@ namespace MediCarePro.BLL.AuthService
 			var authClaims = new List<Claim>
 			{
 				new Claim(ClaimTypes.Email, user.Email),
-				new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+				new Claim(ClaimTypes.NameIdentifier, user.UserName)
 			};
 
 			// Add roles as claims

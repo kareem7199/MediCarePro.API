@@ -22,6 +22,35 @@ namespace MediCarePro.DAL.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MediCarePro.DAL.Data.Entities.PhysicianSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("PhysicianSchedule");
+                });
+
             modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Specialty", b =>
                 {
                     b.Property<int>("Id")
@@ -103,6 +132,11 @@ namespace MediCarePro.DAL.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -154,6 +188,10 @@ namespace MediCarePro.DAL.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -237,6 +275,37 @@ namespace MediCarePro.DAL.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Account", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SpecialtyId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("SpecialtyId");
+
+                    b.HasDiscriminator().HasValue("Account");
+                });
+
+            modelBuilder.Entity("MediCarePro.DAL.Data.Entities.PhysicianSchedule", b =>
+                {
+                    b.HasOne("MediCarePro.DAL.Data.Entities.Account", "Account")
+                        .WithMany("PhysicianSchedules")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -286,6 +355,20 @@ namespace MediCarePro.DAL.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Account", b =>
+                {
+                    b.HasOne("MediCarePro.DAL.Data.Entities.Specialty", "Specialty")
+                        .WithMany()
+                        .HasForeignKey("SpecialtyId");
+
+                    b.Navigation("Specialty");
+                });
+
+            modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Account", b =>
+                {
+                    b.Navigation("PhysicianSchedules");
                 });
 #pragma warning restore 612, 618
         }
