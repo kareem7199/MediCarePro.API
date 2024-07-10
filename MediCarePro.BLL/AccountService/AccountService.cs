@@ -28,5 +28,10 @@ namespace MediCarePro.BLL.AccountService
 												      .ToListAsync();
 			return physicians;
 		}
+		public async Task<Account?> GetPhysicianAsync(string id)
+		{
+			var physician = await _storeContext.Users.FindAsync(id);
+			return physician;
+		}
 	}
 }

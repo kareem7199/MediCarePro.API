@@ -11,5 +11,8 @@ namespace MediCarePro.BLL.ReceptionScreenService
 	{
 		public Task<IReadOnlyList<Specialty>> GetSpecialtiesAsync();
 		public Task<IReadOnlyList<Patient>> GetPatientsAsync();
+		public Task<PhysicianSchedule?> GetPhysicianScheduleAsync(int id);
+		public Task<Patient?> GetPatientAsync(int id);
+		public Task<Visit?> CreateVisitAsync(Visit visit);
 	}
 }

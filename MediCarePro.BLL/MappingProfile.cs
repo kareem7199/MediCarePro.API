@@ -7,12 +7,14 @@ namespace MediCarePro.BLL
 {
 	public class MappingProfile : Profile
 	{
-        public MappingProfile()
-        {
-            CreateMap<Patient, PatientForReceptionScreenDto>();
+		public MappingProfile()
+		{
+			CreateMap<Patient, PatientForReceptionScreenDto>();
 
-            CreateMap<Account, PhysicianDto>()
-                .ForMember(D => D.Name, O => O.MapFrom<FullNameResolver>());
-        }
-    }
+			CreateMap<Account, PhysicianDto>()
+				.ForMember(D => D.Name, O => O.MapFrom<FullNameResolver>());
+
+			CreateMap<VisitCreateDto, Visit>();
+		}
+	}
 }

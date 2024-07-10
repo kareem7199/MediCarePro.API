@@ -10,6 +10,7 @@ namespace MediCarePro.BLL.AccountService
 	public interface IAccountService
 	{
 		public Task<IReadOnlyList<Account>> GetPhysiciansAsync(int specialityId);
+		public Task<Account?> GetPhysicianAsync(string id);
 
 	}
 }
