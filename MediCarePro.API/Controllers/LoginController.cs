@@ -41,7 +41,7 @@ namespace MediCarePro.API.Controllers
 
 			var roles = await _userManager.GetRolesAsync(user);
 
-			return Ok(new AccountDto()
+			return Ok(new AccountDto()	
 			{
 				Email = user.Email,
 				Role = roles.FirstOrDefault(), // Assuming a user has only one role for simplicity

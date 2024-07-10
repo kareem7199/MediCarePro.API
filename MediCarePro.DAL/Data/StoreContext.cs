@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediCarePro.DAL.Data
 {
-	public class StoreContext : IdentityDbContext
+	public class StoreContext : IdentityDbContext<Account>
 	{
 		public StoreContext(DbContextOptions<StoreContext> options)
 			: base(options)
@@ -24,7 +24,7 @@ namespace MediCarePro.DAL.Data
 			base.OnModelCreating(modelBuilder);
 		}
 
-		public DbSet<Specialty> Specialties { get; set; }
+        public DbSet<Specialty> Specialties { get; set; }
         public DbSet<PhysicianSchedule> PhysicianSchedules { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Visit> Visits { get; set; }

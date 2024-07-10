@@ -2,6 +2,7 @@
 using MediCarePro.API.Errors;
 using MediCarePro.API.Middlewares;
 using MediCarePro.BLL;
+using MediCarePro.BLL.AccountService;
 using MediCarePro.BLL.AuthService;
 using MediCarePro.BLL.SpecialtyService;
 using MediCarePro.DAL.Data;
@@ -25,6 +26,7 @@ namespace MediCarePro.API.Extensions
 			services.AddScoped(typeof(IAuthService), typeof(AuthService));
 			services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 			services.AddScoped(typeof(ISpecialtyService) , typeof(SpecialtyService));
+			services.AddScoped(typeof(IAccountService) , typeof(AccountService));
 
 			services.AddScoped<ExceptionMiddleware>();
 
