@@ -9,6 +9,8 @@ namespace MediCarePro.BLL
 	{
         public MappingProfile()
         {
+            CreateMap<Patient, PatientForReceptionScreenDto>();
+
             CreateMap<Account, PhysicianDto>()
                 .ForMember(D => D.Name, O => O.MapFrom<FullNameResolver>());
         }

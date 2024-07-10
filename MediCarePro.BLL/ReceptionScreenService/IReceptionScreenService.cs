@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using MediCarePro.DAL.Data.Entities;
 
-namespace MediCarePro.BLL.SpecialtyService
+namespace MediCarePro.BLL.ReceptionScreenService
 {
-	public interface ISpecialtyService
+	public interface IReceptionScreenService
 	{
 		public Task<IReadOnlyList<Specialty>> GetSpecialtiesAsync();
+		public Task<IReadOnlyList<Patient>> GetPatientsAsync();
 	}
 }
