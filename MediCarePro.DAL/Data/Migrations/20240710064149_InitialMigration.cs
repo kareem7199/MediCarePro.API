@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MediCarePro.DAL.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,6 +23,21 @@ namespace MediCarePro.DAL.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,7 +194,7 @@ namespace MediCarePro.DAL.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PhysicianSchedule",
+                name: "PhysicianSchedules",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -191,13 +206,48 @@ namespace MediCarePro.DAL.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PhysicianSchedule", x => x.Id);
+                    table.PrimaryKey("PK_PhysicianSchedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PhysicianSchedule_AspNetUsers_AccountId",
+                        name: "FK_PhysicianSchedules_AspNetUsers_AccountId",
                         column: x => x.AccountId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Visits",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PhysicanFees = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Diagnosis = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PatientId = table.Column<int>(type: "int", nullable: false),
+                    PhysicianScheduleId = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Visits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Visits_AspNetUsers_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Visits_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Visits_PhysicianSchedules_PhysicianScheduleId",
+                        column: x => x.PhysicianScheduleId,
+                        principalTable: "PhysicianSchedules",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -245,9 +295,30 @@ namespace MediCarePro.DAL.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PhysicianSchedule_AccountId",
-                table: "PhysicianSchedule",
+                name: "IX_PhysicianSchedules_AccountId",
+                table: "PhysicianSchedules",
                 column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_AccountId",
+                table: "Visits",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_Date_PhysicianScheduleId",
+                table: "Visits",
+                columns: new[] { "Date", "PhysicianScheduleId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_PatientId",
+                table: "Visits",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_PhysicianScheduleId",
+                table: "Visits",
+                column: "PhysicianScheduleId");
         }
 
         /// <inheritdoc />
@@ -269,10 +340,16 @@ namespace MediCarePro.DAL.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "PhysicianSchedule");
+                name: "Visits");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "PhysicianSchedules");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

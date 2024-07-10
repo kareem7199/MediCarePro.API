@@ -22,6 +22,30 @@ namespace MediCarePro.DAL.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Patients");
+                });
+
             modelBuilder.Entity("MediCarePro.DAL.Data.Entities.PhysicianSchedule", b =>
                 {
                     b.Property<int>("Id")
@@ -48,7 +72,7 @@ namespace MediCarePro.DAL.Data.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("PhysicianSchedule");
+                    b.ToTable("PhysicianSchedules");
                 });
 
             modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Specialty", b =>
@@ -66,6 +90,47 @@ namespace MediCarePro.DAL.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Specialties");
+                });
+
+            modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Visit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Diagnosis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PhysicanFees")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("PhysicianScheduleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("PhysicianScheduleId");
+
+                    b.HasIndex("Date", "PhysicianScheduleId")
+                        .IsUnique();
+
+                    b.ToTable("Visits");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -304,6 +369,33 @@ namespace MediCarePro.DAL.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Visit", b =>
+                {
+                    b.HasOne("MediCarePro.DAL.Data.Entities.Account", "Physician")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MediCarePro.DAL.Data.Entities.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MediCarePro.DAL.Data.Entities.PhysicianSchedule", "PhysicianSchedule")
+                        .WithMany()
+                        .HasForeignKey("PhysicianScheduleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Physician");
+
+                    b.Navigation("PhysicianSchedule");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

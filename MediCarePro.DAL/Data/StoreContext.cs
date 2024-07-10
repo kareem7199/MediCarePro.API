@@ -25,5 +25,8 @@ namespace MediCarePro.DAL.Data
 		}
 
 		public DbSet<Specialty> Specialties { get; set; }
+        public DbSet<PhysicianSchedule> PhysicianSchedules { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Visit> Visits { get; set; }
     }
 }

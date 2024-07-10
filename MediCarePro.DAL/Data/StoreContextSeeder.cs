@@ -49,6 +49,8 @@ namespace MediCarePro.DAL.Data
 					EndTime = new TimeOnly(20 , 0)
 				};
 
+				await storeContext.AddAsync(schedule);
+
 				var reception = new Account()
 				{
 					FirstName = "Kareem",
@@ -61,7 +63,14 @@ namespace MediCarePro.DAL.Data
 				await userManager.CreateAsync(reception, "Pa$$w0rd");
 				await userManager.AddToRoleAsync(reception, roles[1]);
 
-				await storeContext.AddAsync(schedule);
+				var patient = new Patient()
+				{
+					Name = "Kareem Tamer" ,
+					Age = 21 ,
+					PhoneNumber = "01025578893"
+				};
+
+				await storeContext.AddAsync(patient);
 
 				await storeContext.SaveChangesAsync();
 
