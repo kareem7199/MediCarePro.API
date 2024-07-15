@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediCarePro.API.Errors;
+using MediCarePro.API.Hubs;
 using MediCarePro.BLL.AccountService;
 using MediCarePro.BLL.Dtos;
 using MediCarePro.BLL.ReceptionScreenService;
@@ -7,6 +8,7 @@ using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MediCarePro.API.Controllers
@@ -17,15 +19,18 @@ namespace MediCarePro.API.Controllers
 		private readonly IReceptionScreenService _receptionScreenService;
 		private readonly IAccountService _accountService;
 		private readonly IMapper _mapper;
+		private readonly IHubContext<VisitHub> _hubContext;
 
 		public ReceptionScreenController(
 			IReceptionScreenService receptionScreenService,
 			IAccountService accountService,
-			IMapper mapper)
+			IMapper mapper,
+		    IHubContext<VisitHub> hubContext)
 		{
 			_receptionScreenService = receptionScreenService;
 			_accountService = accountService;
 			_mapper = mapper;
+			_hubContext = hubContext;
 		}
 
 		[HttpGet("Specialty")]
@@ -60,7 +65,8 @@ namespace MediCarePro.API.Controllers
 
 			string dayName = model.Date.DayOfWeek.ToString();
 
-			if (schedule.Day.ToString() != dayName || model.Date < DateOnly.FromDateTime(DateTime.Today)) return BadRequest(new ApiResponse(400, "Invalid Date"));
+			if (schedule.Day.ToString() != dayName) return BadRequest(new ApiResponse(400, "Invalid Date"));
+			if (model.Date < DateOnly.FromDateTime(DateTime.Today)) return BadRequest(new ApiResponse(400, "Date cannot be in the past"));
 
 			if (schedule.AccountId != model.AccountId) return NotFound(new ApiResponse(404, "Physician not found"));
 
@@ -70,6 +76,7 @@ namespace MediCarePro.API.Controllers
 			var mappedVisit = _mapper.Map<Visit>(model);
 
 			var visit = await _receptionScreenService.CreateVisitAsync(mappedVisit);
+			await _hubContext.Clients.User(schedule.AccountId).SendAsync("ReceiveVisit", visit);
 
 			return Ok(visit);
 		}

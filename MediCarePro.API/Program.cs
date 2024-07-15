@@ -1,5 +1,6 @@
 
 using MediCarePro.API.Extensions;
+using MediCarePro.API.Hubs;
 using MediCarePro.API.Middlewares;
 using MediCarePro.DAL.Data;
 using MediCarePro.DAL.Data.Entities;
@@ -21,6 +22,8 @@ namespace MediCarePro.API
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
+
+			builder.Services.AddSignalR();
 
 			builder.Services.AddApplicationServices();
 			builder.Services.AddAuthServices(builder.Configuration);
@@ -83,8 +86,10 @@ namespace MediCarePro.API
 
 			app.UseAuthorization();
 
+			app.UseCors("MyPolicy");
 
 			app.MapControllers();
+			app.MapHub<VisitHub>("/visithub");
 
 			app.Run();
 		}

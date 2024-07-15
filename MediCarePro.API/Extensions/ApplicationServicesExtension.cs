@@ -78,6 +78,24 @@ namespace MediCarePro.API.Extensions
 					ValidateLifetime = true,
 					ClockSkew = TimeSpan.Zero
 				};
+
+				options.Events = new JwtBearerEvents
+				{
+					OnMessageReceived = context =>
+					{
+						var accessToken = context.Request.Query["access_token"];
+
+						// If the request is for the hub...
+						var path = context.HttpContext.Request.Path;
+						if (!string.IsNullOrEmpty(accessToken) &&
+							(path.StartsWithSegments("/visithub")))
+						{
+							// Read the token from the query string
+							context.Token = accessToken;
+						}
+						return Task.CompletedTask;
+					}
+				};
 			});
 
 			return services;
