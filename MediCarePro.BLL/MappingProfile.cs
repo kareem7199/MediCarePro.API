@@ -15,6 +15,11 @@ namespace MediCarePro.BLL
 				.ForMember(D => D.Name, O => O.MapFrom<FullNameResolver>());
 
 			CreateMap<VisitCreateDto, Visit>();
+
+			CreateMap<PhysicianSchedule, PhysicianScheduleDto>();
+
+			CreateMap<Visit ,  VisitDto>()
+				.ForMember(D => D.PatientName , O => O.MapFrom(S => S.Patient.Name));
 		}
 	}
 }

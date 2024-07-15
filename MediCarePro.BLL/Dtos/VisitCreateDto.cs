@@ -19,6 +19,6 @@ namespace MediCarePro.BLL.Dtos
 		[Required]
 		public int PhysicianScheduleId { get; set; }
 		[Required]
-		public DateOnly Date { get; set; }
+		public DateTime Date { get; set; }
 	}
 }

@@ -304,12 +304,6 @@ namespace MediCarePro.DAL.Data.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Visits_Date_PhysicianScheduleId",
-                table: "Visits",
-                columns: new[] { "Date", "PhysicianScheduleId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Visits_PatientId",
                 table: "Visits",
                 column: "PatientId");

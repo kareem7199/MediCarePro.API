@@ -13,7 +13,7 @@ namespace MediCarePro.DAL.Data.Entities
         public string AccountId { get; set; }
         public int PatientId { get; set; }
         public int PhysicianScheduleId { get; set; }
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
         public PhysicianSchedule PhysicianSchedule { get; set; }
         public Patient Patient { get; set; }
         public Account Physician { get; set; }

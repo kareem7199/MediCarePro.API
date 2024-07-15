@@ -57,26 +57,41 @@ namespace MediCarePro.API.Controllers
 			return Ok(_mapper.Map<IReadOnlyList<PatientForReceptionScreenDto>>(patients));
 		}
 
+		[HttpGet("Schedule/{physicianId}")]
+		public async Task<ActionResult<PhysicianScheduleDto>> GetPhysicianSchedule(string physicianId)
+		{
+			var schedule = await _receptionScreenService.GetPhysicianScheduleAsync(physicianId);
+
+			return Ok(_mapper.Map<IReadOnlyList<PhysicianScheduleDto>>(schedule));
+		}
+
+		[HttpGet("Visit/{physicianId}")]
+		public async Task<ActionResult> GetVisits([FromQuery] GetVisitsParamsDto getVisitsParams , string physicianId)
+		{
+			DateTime fromUtc = getVisitsParams.From.ToUniversalTime();
+			DateTime toUtc = getVisitsParams.To.ToUniversalTime();
+
+			var visits = await _receptionScreenService.GetVisitsWithRangeAsync(physicianId, fromUtc, toUtc);
+
+			return Ok(_mapper.Map<IReadOnlyList<VisitDto>>(visits));
+		}
+
 		[HttpPost("Visit")]
 		public async Task<ActionResult<Visit>> CreateVisit(VisitCreateDto model)
 		{
-			var schedule = await _receptionScreenService.GetPhysicianScheduleAsync(model.PhysicianScheduleId);
-			if (schedule is null) return NotFound(new ApiResponse(404, "Schedule not found"));
-
 			string dayName = model.Date.DayOfWeek.ToString();
 
-			if (schedule.Day.ToString() != dayName) return BadRequest(new ApiResponse(400, "Invalid Date"));
-			if (model.Date < DateOnly.FromDateTime(DateTime.Today)) return BadRequest(new ApiResponse(400, "Date cannot be in the past"));
-
-			if (schedule.AccountId != model.AccountId) return NotFound(new ApiResponse(404, "Physician not found"));
-
+			if (model.Date < DateTime.Today) return BadRequest(new ApiResponse(400, "Date cannot be in the past"));
+			
 			var patient = await _receptionScreenService.GetPatientAsync(model.PatientId);
 			if (patient is null) return NotFound(new ApiResponse(404, "Patient not found"));
 
+
 			var mappedVisit = _mapper.Map<Visit>(model);
+			mappedVisit.AccountId = model.AccountId;
 
 			var visit = await _receptionScreenService.CreateVisitAsync(mappedVisit);
-			await _hubContext.Clients.User(schedule.AccountId).SendAsync("ReceiveVisit", visit);
+			await _hubContext.Clients.User(model.AccountId).SendAsync("ReceiveVisit", visit);
 
 			return Ok(visit);
 		}

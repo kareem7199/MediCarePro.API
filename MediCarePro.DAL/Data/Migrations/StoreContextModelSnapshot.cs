@@ -206,9 +206,6 @@ namespace MediCarePro.DAL.Data.Migrations
 
                     b.HasIndex("PhysicianScheduleId");
 
-                    b.HasIndex("Date", "PhysicianScheduleId")
-                        .IsUnique();
-
                     b.ToTable("Visits");
                 });
 

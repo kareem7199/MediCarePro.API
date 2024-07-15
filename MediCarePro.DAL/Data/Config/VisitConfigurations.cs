@@ -14,24 +14,13 @@ namespace MediCarePro.DAL.Data.Config
 	{
 		public void Configure(EntityTypeBuilder<Visit> builder)
 		{
-
 			builder.HasOne(V => V.PhysicianSchedule)
 				   .WithMany()
 				   .HasForeignKey(V => V.PhysicianScheduleId)
 				   .OnDelete(DeleteBehavior.NoAction);
 
-			builder.HasIndex(V => new { V.Date, V.PhysicianScheduleId })
-				   .IsUnique();
-
 			builder.Property(V => V.PhysicanFees)
 				   .HasColumnType("decimal(18,2)");
-
-			builder.Property(V => V.Date)
-				   .HasConversion(
-					v => v.ToDateTime(TimeOnly.MinValue),
-					v => DateOnly.FromDateTime(v));      
-
-
 		}
 	}
 }

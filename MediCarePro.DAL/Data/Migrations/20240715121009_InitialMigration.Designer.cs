@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediCarePro.DAL.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20240710090433_InitialMigration")]
+    [Migration("20240715121009_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -208,9 +208,6 @@ namespace MediCarePro.DAL.Data.Migrations
                     b.HasIndex("PatientId");
 
                     b.HasIndex("PhysicianScheduleId");
-
-                    b.HasIndex("Date", "PhysicianScheduleId")
-                        .IsUnique();
 
                     b.ToTable("Visits");
                 });
