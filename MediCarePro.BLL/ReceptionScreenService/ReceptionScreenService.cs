@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MediCarePro.DAL.Data.Entities;
 using MediCarePro.DAL.Interfaces;
 using MediCarePro.DAL.Specifications;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MediCarePro.BLL.ReceptionScreenService
 {
@@ -37,12 +38,13 @@ namespace MediCarePro.BLL.ReceptionScreenService
 			
 			return patient;
 		}
-
-		public async Task<IReadOnlyList<Patient>> GetPatientsAsync()
+		public async Task<IReadOnlyList<Patient>> GetPatientsAsync(string? searchTerm)
 		{
 			var patientRepo = _unitOfWork.Repository<Patient>();
 
-			var patients = await patientRepo.GetAllAsync();
+			var spec = new PatientSpec(searchTerm);
+
+			var patients = await patientRepo.GetAllWithSpecAsync(spec);
 
 			return patients;
 		}

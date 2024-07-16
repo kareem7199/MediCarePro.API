@@ -10,7 +10,7 @@ namespace MediCarePro.BLL.ReceptionScreenService
 	public interface IReceptionScreenService
 	{
 		public Task<IReadOnlyList<Specialty>> GetSpecialtiesAsync();
-		public Task<IReadOnlyList<Patient>> GetPatientsAsync();
+		public Task<IReadOnlyList<Patient>> GetPatientsAsync(string? serachTerm);
 		public Task<IReadOnlyList<PhysicianSchedule>> GetPhysicianScheduleAsync(string id);
 		public Task<Patient?> GetPatientAsync(int id);
 		public Task<IReadOnlyList<Visit>> GetVisitsWithRangeAsync(string physicianId , DateTime from, DateTime to);

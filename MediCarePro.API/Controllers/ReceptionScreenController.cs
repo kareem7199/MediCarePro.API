@@ -50,9 +50,9 @@ namespace MediCarePro.API.Controllers
 		}
 
 		[HttpGet("Patient")]
-		public async Task<ActionResult<IReadOnlyList<Patient>>> GetPatients()
+		public async Task<ActionResult<IReadOnlyList<Patient>>> GetPatients([FromQuery] string? searchTerm)
 		{
-			var patients = await _receptionScreenService.GetPatientsAsync();
+			var patients = await _receptionScreenService.GetPatientsAsync(searchTerm);
 
 			return Ok(_mapper.Map<IReadOnlyList<PatientForReceptionScreenDto>>(patients));
 		}
