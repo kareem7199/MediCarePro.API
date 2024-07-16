@@ -14,6 +14,7 @@ namespace MediCarePro.BLL.ReceptionScreenService
 		public Task<IReadOnlyList<PhysicianSchedule>> GetPhysicianScheduleAsync(string id);
 		public Task<Patient?> GetPatientAsync(int id);
 		public Task<IReadOnlyList<Visit>> GetVisitsWithRangeAsync(string physicianId , DateTime from, DateTime to);
+		public Task<IReadOnlyList<PhysicianSchedule>> GetFilteredPhysicianScheduleAsync(string physicianId, TimeOnly startTime, Day day);
 		public Task<Visit?> CreateVisitAsync(Visit visit);
 	}
 }

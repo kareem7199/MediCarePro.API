@@ -30,6 +30,16 @@ namespace MediCarePro.BLL.ReceptionScreenService
 			return visit;
 		}
 
+		public async Task<IReadOnlyList<PhysicianSchedule>> GetFilteredPhysicianScheduleAsync(string physicianId, TimeOnly startTime, Day day)
+		{
+			var physicianScheduleRepo = _unitOfWork.Repository<PhysicianSchedule>();
+			var spec = new PhysicianScheduleSpec(physicianId, startTime, day);
+
+			var physicianSchedule = await physicianScheduleRepo.GetAllWithSpecAsync(spec);
+
+			return physicianSchedule;
+		}
+
 		public async Task<Patient?> GetPatientAsync(int id)
 		{
 			var patientRepo = _unitOfWork.Repository<Patient>();

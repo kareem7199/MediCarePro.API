@@ -83,9 +83,12 @@ namespace MediCarePro.API.Controllers
 
 			if (model.Date < DateTime.Today) return BadRequest(new ApiResponse(400, "Date cannot be in the past"));
 
-			var visits = await _receptionScreenService.GetVisitsWithRangeAsync(model.AccountId , model.Date.AddMinutes(-1) , model.Date.AddMinutes(29));
+			var visits = await _receptionScreenService.GetVisitsWithRangeAsync(model.AccountId , model.Date.AddSeconds(-1) , model.Date.AddSeconds(29 * 60 + 59));
 			if (visits.Any()) return BadRequest(new ApiResponse(400, "This slot is already booked by another patient"));
 
+			var startTime = TimeOnly.FromDateTime(model.Date);
+			var schedule = await _receptionScreenService.GetFilteredPhysicianScheduleAsync(model.AccountId , startTime , (Day)Enum.Parse(typeof(Day) , dayName));
+			if (!schedule.Any()) return BadRequest(new ApiResponse(400, "This slot is outside the physician's available hours"));
 
 			var patient = await _receptionScreenService.GetPatientAsync(model.PatientId);
 			if (patient is null) return NotFound(new ApiResponse(404, "Patient not found"));
