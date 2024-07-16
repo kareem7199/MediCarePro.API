@@ -66,7 +66,7 @@ namespace MediCarePro.API.Controllers
 		}
 
 		[HttpGet("Visit/{physicianId}")]
-		public async Task<ActionResult> GetVisits([FromQuery] GetVisitsParamsDto getVisitsParams , string physicianId)
+		public async Task<ActionResult<IReadOnlyList<VisitDto>>> GetVisits([FromQuery] GetVisitsParamsDto getVisitsParams , string physicianId)
 		{
 			DateTime fromUtc = getVisitsParams.From.ToUniversalTime();
 			DateTime toUtc = getVisitsParams.To.ToUniversalTime();
@@ -77,12 +77,16 @@ namespace MediCarePro.API.Controllers
 		}
 
 		[HttpPost("Visit")]
-		public async Task<ActionResult<Visit>> CreateVisit(VisitCreateDto model)
+		public async Task<ActionResult<VisitDto>> CreateVisit(VisitCreateDto model)
 		{
 			string dayName = model.Date.DayOfWeek.ToString();
 
 			if (model.Date < DateTime.Today) return BadRequest(new ApiResponse(400, "Date cannot be in the past"));
-			
+
+			var visits = await _receptionScreenService.GetVisitsWithRangeAsync(model.AccountId , model.Date.AddMinutes(-1) , model.Date.AddMinutes(29));
+			if (visits.Any()) return BadRequest(new ApiResponse(400, "This slot is already booked by another patient"));
+
+
 			var patient = await _receptionScreenService.GetPatientAsync(model.PatientId);
 			if (patient is null) return NotFound(new ApiResponse(404, "Patient not found"));
 
@@ -93,9 +97,7 @@ namespace MediCarePro.API.Controllers
 			var visit = await _receptionScreenService.CreateVisitAsync(mappedVisit);
 			await _hubContext.Clients.User(model.AccountId).SendAsync("ReceiveVisit", visit);
 
-			return Ok(visit);
+			return Ok(_mapper.Map<VisitDto>(visit));
 		}
-
-
 	}
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediCarePro.DAL.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20240715121009_InitialMigration")]
+    [Migration("20240716085806_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
