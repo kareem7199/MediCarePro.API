@@ -5,6 +5,7 @@ using MediCarePro.BLL;
 using MediCarePro.BLL.AccountService;
 using MediCarePro.BLL.AuthService;
 using MediCarePro.BLL.ReceptionScreenService;
+using MediCarePro.BLL.VisitService;
 using MediCarePro.DAL.Data;
 using MediCarePro.DAL.Data.Entities;
 using MediCarePro.DAL.Interfaces;
@@ -27,6 +28,7 @@ namespace MediCarePro.API.Extensions
 			services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 			services.AddScoped(typeof(IReceptionScreenService) , typeof(ReceptionScreenService));
 			services.AddScoped(typeof(IAccountService) , typeof(AccountService));
+			services.AddScoped(typeof(IVisitService), typeof(VisitService));
 
 			services.AddScoped<ExceptionMiddleware>();
 

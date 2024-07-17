@@ -20,6 +20,9 @@ namespace MediCarePro.BLL
 
 			CreateMap<Visit ,  VisitDto>()
 				.ForMember(D => D.PatientName , O => O.MapFrom(S => S.Patient.Name));
+
+			CreateMap<Visit, DailyVisitToReturnDto>()
+				.ForMember(D => D.PatientName, O => O.MapFrom(S => S.Patient.Name));
 		}
 	}
 }

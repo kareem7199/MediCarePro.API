@@ -20,16 +20,6 @@ namespace MediCarePro.BLL.ReceptionScreenService
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<Visit?> CreateVisitAsync(Visit visit)
-		{
-			var visitRepo = _unitOfWork.Repository<Visit>();
-
-			visitRepo.Add(visit);
-			await _unitOfWork.CompleteAsync();
-
-			return visit;
-		}
-
 		public async Task<IReadOnlyList<PhysicianSchedule>> GetFilteredPhysicianScheduleAsync(string physicianId, TimeOnly startTime, Day day)
 		{
 			var physicianScheduleRepo = _unitOfWork.Repository<PhysicianSchedule>();
@@ -77,16 +67,6 @@ namespace MediCarePro.BLL.ReceptionScreenService
 			var Specialties = await SpecialtyRepo.GetAllAsync();
 
 			return Specialties;
-		}
-
-		public async Task<IReadOnlyList<Visit>> GetVisitsWithRangeAsync(string physicianId, DateTime from, DateTime to)
-		{
-			var visitRepo = _unitOfWork.Repository<Visit>();
-			var spec = new VisitSpec(physicianId , from, to);
-
-			var visits = await visitRepo.GetAllWithSpecAsync(spec);
-
-			return visits;
 		}
 	}
 }
