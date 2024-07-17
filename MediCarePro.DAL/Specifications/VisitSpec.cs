@@ -13,6 +13,7 @@ namespace MediCarePro.DAL.Specifications
             :base(V => V.AccountId == physicianId && V.Date >= from && V.Date <= to)
         {
             Includes.Add(V => V.Patient);
+            OrderBy = V => V.Date;
         }
     }
 }

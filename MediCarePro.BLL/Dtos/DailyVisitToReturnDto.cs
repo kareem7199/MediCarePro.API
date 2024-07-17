@@ -13,5 +13,6 @@ namespace MediCarePro.BLL.Dtos
         public string? Diagnosis { get; set; }
         public int PatientId { get; set; }
         public string PatientName { get; set; } = null!;
+        public DateTime Date { get; set; }
     }
 }

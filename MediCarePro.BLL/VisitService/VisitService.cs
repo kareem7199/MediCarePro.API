@@ -37,5 +37,21 @@ namespace MediCarePro.BLL.VisitService
 
 			return visit;
 		}
+
+		public async Task<Visit?> UpdateVisitDiagnosisAsync(int VisitId, string diagnosis , string physicianId)
+		{
+			var visitRepo = _unitOfWork.Repository<Visit>();
+
+			var visit = await visitRepo.GetAsync(VisitId);
+
+			if (visit is null || visit.AccountId != physicianId) return null;
+
+			visit.Diagnosis = diagnosis;
+
+			visitRepo.Update(visit);
+			await _unitOfWork.CompleteAsync();
+
+			return visit;
+		}
 	}
 }

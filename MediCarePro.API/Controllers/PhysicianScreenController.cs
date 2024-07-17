@@ -32,5 +32,17 @@ namespace MediCarePro.API.Controllers
 
 			return Ok(_mapper.Map<IReadOnlyList<DailyVisitToReturnDto>>(visits));
 		}
+
+		[HttpPatch("Visit")]
+		public async Task<ActionResult<DailyVisitToReturnDto>> UpdateVisitDiagnosis(UpdateVisitDto model)
+		{
+			var physicianId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+			var updatedVisit = await _visitService.UpdateVisitDiagnosisAsync(model.Id, model.Diagnosis , physicianId);
+
+			if(updatedVisit is null) return NotFound(new ApiResponse(404, "Visit not found."));
+
+			return Ok(_mapper.Map<DailyVisitToReturnDto>(updatedVisit));
+		}
 	}
 }
