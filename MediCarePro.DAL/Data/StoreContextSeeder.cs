@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediCarePro.DAL.Data
 {
@@ -12,68 +14,100 @@ namespace MediCarePro.DAL.Data
 	{
 		private static string[] roles = { "Physician", "Reception" };
 
-		public static async Task SeedUsersAsync(UserManager<Account> userManager , StoreContext storeContext)
+		public static async Task SeedAsync(UserManager<Account> userManager, StoreContext storeContext)
 		{
 
-			if (!userManager.Users.Any())
+			if (!storeContext.Specialties.Any())
 			{
+				var SpecialtiesData = File.ReadAllText("../MediCarePro.DAL/Data/DataSeed/specialties.json");
+				var Specialties = JsonSerializer.Deserialize<List<Specialty>>(SpecialtiesData);
 
-				var specialty = new Specialty()
+				if (Specialties?.Count > 0)
 				{
-					Name = "Test"
-				};
+					foreach (var Specialty in Specialties)
+					{
+						await storeContext.AddAsync(Specialty);
+					}
+					await storeContext.SaveChangesAsync();
+				}
 
-				await storeContext.AddAsync(specialty);
-
-				await storeContext.SaveChangesAsync();
-
-				var physician = new Account()
+				if (!userManager.Users.Any())
 				{
-					FirstName = "Kareem",
-					SecondName = "Tamer",
-					Email = "kareemtameregy@gmail.com",
-					UserName = "kareem.tamer",
-					PhoneNumber = "01025578893",
-					SpecialtyId = specialty.Id
-				};
+					var i = 0;
+					foreach (var Specialty in Specialties)
+					{
+						var physician = new Account()
+						{
+							FirstName = "Kareem",
+							SecondName = "Tamer",
+							Email = $"kareemtameregy{i}@gmail.com",
+							UserName = $"kareem.tamer{i}",
+							PhoneNumber = "01025578893",
+							SpecialtyId = Specialty.Id
+						};
 
+						await userManager.CreateAsync(physician, "Pa$$w0rd");
+						await userManager.AddToRoleAsync(physician, roles[0]);
 
-				await userManager.CreateAsync(physician, "Pa$$w0rd");
-				await userManager.AddToRoleAsync(physician, roles[0]);
+						var PhysicianSchedule = new PhysicianSchedule()
+						{
+							AccountId = physician.Id,
+							StartTime = new TimeOnly(13, 00),
+							EndTime = new TimeOnly(18, 00),
+							Day = Day.Saturday
+						};
 
-				var schedule = new PhysicianSchedule()
+						var PhysicianSchedule2 = new PhysicianSchedule()
+						{
+							AccountId = physician.Id,
+							StartTime = new TimeOnly(9, 00),
+							EndTime = new TimeOnly(17, 00),
+							Day = Day.Monday
+						};
+
+						var PhysicianSchedule3 = new PhysicianSchedule()
+						{
+							AccountId = physician.Id,
+							StartTime = new TimeOnly(15, 00),
+							EndTime = new TimeOnly(11, 00),
+							Day = Day.Thursday
+						};
+
+						await storeContext.AddAsync(PhysicianSchedule);
+						await storeContext.AddAsync(PhysicianSchedule2);
+						await storeContext.AddAsync(PhysicianSchedule3);
+
+						await storeContext.SaveChangesAsync();
+
+						i++;
+					}
+
+					var reception = new Account()
+					{
+						FirstName = "Kareem",
+						SecondName = "Tamer",
+						Email = $"kareemtameregy+{i}@gmail.com",
+						UserName = $"kareem.tamer{i}",
+						PhoneNumber = "01025578893"
+					};
+
+					await userManager.CreateAsync(reception, "Pa$$w0rd");
+					await userManager.AddToRoleAsync(reception, roles[1]);
+				}
+			}
+			if (!storeContext.Patients.Any())
+			{
+				var PatientsData = File.ReadAllText("../MediCarePro.DAL/Data/DataSeed/patients.json");
+				var Patients = JsonSerializer.Deserialize<List<Patient>>(PatientsData);
+
+				if (Patients?.Count > 0)
 				{
-					AccountId = physician.Id,
-					Day = Day.Saturday,
-					StartTime = new TimeOnly(14, 30),
-					EndTime = new TimeOnly(20 , 0)
-				};
-
-				await storeContext.AddAsync(schedule);
-
-				var reception = new Account()
-				{
-					FirstName = "Kareem",
-					SecondName = "Tamer",
-					Email = "kareemtameregy+1@gmail.com",
-					UserName = "kareem.tamer1",
-					PhoneNumber = "01025578893"
-				};
-
-				await userManager.CreateAsync(reception, "Pa$$w0rd");
-				await userManager.AddToRoleAsync(reception, roles[1]);
-
-				var patient = new Patient()
-				{
-					Name = "Kareem Tamer" ,
-					Age = 21 ,
-					PhoneNumber = "01025578893"
-				};
-
-				await storeContext.AddAsync(patient);
-
-				await storeContext.SaveChangesAsync();
-
+					foreach (var Patient in Patients)
+					{
+						await storeContext.AddAsync(Patient);
+					}
+					await storeContext.SaveChangesAsync();
+				}
 			}
 		}
 

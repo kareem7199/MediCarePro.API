@@ -65,7 +65,7 @@ namespace MediCarePro.API
 				var userManager = services.GetRequiredService<UserManager<Account>>();
 
 				await StoreContextSeeder.SeedRolesAsync(roleManager);
-				await StoreContextSeeder.SeedUsersAsync(userManager , _dbContext);
+				await StoreContextSeeder.SeedAsync(userManager , _dbContext);
 			}
 			catch (Exception ex)
 			{

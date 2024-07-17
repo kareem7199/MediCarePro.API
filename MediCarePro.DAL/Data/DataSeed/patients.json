@@ -1,0 +1,102 @@
+[
+  {
+    "Name": "Kareem Tamer",
+    "Age": 21,
+    "PhoneNumber": "01025578893"
+  },
+  {
+    "Name": "Sarah Smith",
+    "Age": 30,
+    "PhoneNumber": "01234567890"
+  },
+  {
+    "Name": "John Doe",
+    "Age": 45,
+    "PhoneNumber": "01111111111"
+  },
+  {
+    "Name": "Emily Johnson",
+    "Age": 28,
+    "PhoneNumber": "01987654321"
+  },
+  {
+    "Name": "Michael Brown",
+    "Age": 50,
+    "PhoneNumber": "01555555555"
+  },
+  {
+    "Name": "Emma Davis",
+    "Age": 35,
+    "PhoneNumber": "01876543210"
+  },
+  {
+    "Name": "Daniel Wilson",
+    "Age": 42,
+    "PhoneNumber": "01777777777"
+  },
+  {
+    "Name": "Sophia Miller",
+    "Age": 25,
+    "PhoneNumber": "01333333333"
+  },
+  {
+    "Name": "Matthew Garcia",
+    "Age": 31,
+    "PhoneNumber": "01444444444"
+  },
+  {
+    "Name": "Olivia Martinez",
+    "Age": 27,
+    "PhoneNumber": "01666666666"
+  },
+  {
+    "Name": "William Lopez",
+    "Age": 55,
+    "PhoneNumber": "01432109876"
+  },
+  {
+    "Name": "Isabella Hernandez",
+    "Age": 20,
+    "PhoneNumber": "01999999999"
+  },
+  {
+    "Name": "James Wilson",
+    "Age": 38,
+    "PhoneNumber": "01888888888"
+  },
+  {
+    "Name": "Ava Moore",
+    "Age": 23,
+    "PhoneNumber": "01123456789"
+  },
+  {
+    "Name": "Liam Clark",
+    "Age": 29,
+    "PhoneNumber": "01234567891"
+  },
+  {
+    "Name": "Mia Lewis",
+    "Age": 33,
+    "PhoneNumber": "01543210987"
+  },
+  {
+    "Name": "Benjamin Young",
+    "Age": 40,
+    "PhoneNumber": "01789012345"
+  },
+  {
+    "Name": "Charlotte Taylor",
+    "Age": 26,
+    "PhoneNumber": "01654321098"
+  },
+  {
+    "Name": "Alexander King",
+    "Age": 36,
+    "PhoneNumber": "01456789012"
+  },
+  {
+    "Name": "Amelia Hill",
+    "Age": 24,
+    "PhoneNumber": "01345678901"
+  }
+]
