@@ -68,10 +68,7 @@ namespace MediCarePro.API.Controllers
 		[HttpGet("Visit/{physicianId}")]
 		public async Task<ActionResult<IReadOnlyList<VisitDto>>> GetVisits([FromQuery] GetVisitsParamsDto getVisitsParams , string physicianId)
 		{
-			DateTime fromUtc = getVisitsParams.From.ToUniversalTime();
-			DateTime toUtc = getVisitsParams.To.ToUniversalTime();
-
-			var visits = await _receptionScreenService.GetVisitsWithRangeAsync(physicianId, fromUtc, toUtc);
+			var visits = await _receptionScreenService.GetVisitsWithRangeAsync(physicianId, getVisitsParams.From , getVisitsParams.To.AddSeconds(-1));
 
 			return Ok(_mapper.Map<IReadOnlyList<VisitDto>>(visits));
 		}
@@ -87,6 +84,7 @@ namespace MediCarePro.API.Controllers
 			if (visits.Any()) return BadRequest(new ApiResponse(400, "This slot is already booked by another patient"));
 
 			var startTime = TimeOnly.FromDateTime(model.Date);
+			
 			var schedule = await _receptionScreenService.GetFilteredPhysicianScheduleAsync(model.AccountId , startTime , (Day)Enum.Parse(typeof(Day) , dayName));
 			if (!schedule.Any()) return BadRequest(new ApiResponse(400, "This slot is outside the physician's available hours"));
 
