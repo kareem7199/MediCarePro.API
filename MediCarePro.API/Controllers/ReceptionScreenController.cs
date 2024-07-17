@@ -100,7 +100,11 @@ namespace MediCarePro.API.Controllers
 			mappedVisit.AccountId = model.AccountId;
 
 			var visit = await _visitService.CreateVisitAsync(mappedVisit);
-			await _hubContext.Clients.User(model.AccountId).SendAsync("ReceiveVisit", visit);
+
+			await _hubContext.Clients.User(model.AccountId).SendAsync("ReceiveVisit", new VisitNotificationDto() {
+				Date = DateOnly.FromDateTime(visit.Date) ,
+				Visit = _mapper.Map<DailyVisitToReturnDto>(visit)
+			});
 
 			return Ok(_mapper.Map<VisitDto>(visit));
 		}
