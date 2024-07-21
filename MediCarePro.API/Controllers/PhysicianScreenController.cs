@@ -18,19 +18,31 @@ namespace MediCarePro.API.Controllers
 		public PhysicianScreenController(
 			IVisitService visitService,
 			IMapper mapper)
-        {
+		{
 			_visitService = visitService;
 			_mapper = mapper;
 		}
 
-        [HttpGet("Visit")]
+		[HttpGet("Visit")]
 		public async Task<ActionResult<IReadOnlyList<DailyVisitToReturnDto>>> GetDailyVisits([FromQuery] DailyVisitRequestDto model)
 		{
 			var physicianId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-			var visits = await _visitService.GetVisitsWithRangeAsync(physicianId , model.Date.Value , model.Date.Value.AddDays(1).AddSeconds(-1));
+			var visits = await _visitService.GetVisitsWithRangeAsync(physicianId, model.Date.Value, model.Date.Value.AddDays(1).AddSeconds(-1));
 
 			return Ok(_mapper.Map<IReadOnlyList<DailyVisitToReturnDto>>(visits));
+		}
+
+		[HttpGet("Visit/{visitId}")]
+		public async Task<ActionResult<VisitReportDto>> GetVisit(int visitId)
+		{
+			var physicianId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+			var visit = await _visitService.GetVisitByIdAsync(visitId, physicianId);
+
+			if(visit is null) return NotFound(new ApiResponse(404 , "Visit not found"));
+
+			return Ok(_mapper.Map<VisitReportDto>(visit));
 		}
 
 		[HttpPatch("Visit")]
@@ -38,9 +50,9 @@ namespace MediCarePro.API.Controllers
 		{
 			var physicianId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-			var updatedVisit = await _visitService.UpdateVisitDiagnosisAsync(model.Id, model.Diagnosis , physicianId);
+			var updatedVisit = await _visitService.UpdateVisitDiagnosisAsync(model.Id, model.Diagnosis, physicianId);
 
-			if(updatedVisit is null) return NotFound(new ApiResponse(404, "Visit not found."));
+			if (updatedVisit is null) return NotFound(new ApiResponse(404, "Visit not found."));
 
 			return Ok(_mapper.Map<DailyVisitToReturnDto>(updatedVisit));
 		}

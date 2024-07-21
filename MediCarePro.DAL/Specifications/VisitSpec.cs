@@ -15,5 +15,12 @@ namespace MediCarePro.DAL.Specifications
             Includes.Add(V => V.Patient);
             OrderBy = V => V.Date;
         }
+
+        public VisitSpec(int id)
+            :base(V => V.Id == id)
+        {
+            Includes.Add(V => V.Patient);
+            Includes.Add(V => V.Physician);
+        }
     }
 }

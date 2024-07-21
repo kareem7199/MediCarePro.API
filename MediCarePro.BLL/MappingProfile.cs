@@ -18,11 +18,15 @@ namespace MediCarePro.BLL
 
 			CreateMap<PhysicianSchedule, PhysicianScheduleDto>();
 
-			CreateMap<Visit ,  VisitDto>()
-				.ForMember(D => D.PatientName , O => O.MapFrom(S => S.Patient.Name));
+			CreateMap<Visit, VisitDto>()
+				.ForMember(D => D.PatientName, O => O.MapFrom(S => S.Patient.Name));
 
 			CreateMap<Visit, DailyVisitToReturnDto>()
 				.ForMember(D => D.PatientName, O => O.MapFrom(S => S.Patient.Name));
+
+			CreateMap<Visit, VisitReportDto>()
+					.ForMember(D => D.PatientName, O => O.MapFrom(S => S.Patient.Name))
+					.ForMember(D => D.PhysicanName , O => O.MapFrom(S => $"{S.Physician.FirstName} {S.Physician.SecondName}"));
 		}
 	}
 }
