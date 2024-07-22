@@ -26,6 +26,7 @@ namespace MediCarePro.API.Extensions
 
 			services.AddScoped(typeof(IAuthService), typeof(AuthService));
 			services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+			services.AddScoped(typeof(IAccountRepository) , typeof(AccountRepository));
 			services.AddScoped(typeof(IReceptionScreenService) , typeof(ReceptionScreenService));
 			services.AddScoped(typeof(IAccountService) , typeof(AccountService));
 			services.AddScoped(typeof(IVisitService), typeof(VisitService));
@@ -61,6 +62,7 @@ namespace MediCarePro.API.Extensions
 			{
 				options.AddPolicy("Physician", policy => policy.RequireRole("Physician"));
 				options.AddPolicy("Reception", policy => policy.RequireRole("Reception"));
+				options.AddPolicy("UserCreator", policy => policy.RequireRole("UserCreator"));
 			});
 
 			services.AddAuthentication(options =>

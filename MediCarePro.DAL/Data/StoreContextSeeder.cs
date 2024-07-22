@@ -12,7 +12,7 @@ namespace MediCarePro.DAL.Data
 {
 	public static class StoreContextSeeder
 	{
-		private static string[] roles = { "Physician", "Reception" };
+		private static string[] roles = { "Physician", "Reception" , "UserCreator" };
 
 		public static async Task SeedAsync(UserManager<Account> userManager, StoreContext storeContext)
 		{
