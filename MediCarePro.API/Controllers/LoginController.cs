@@ -29,11 +29,6 @@ namespace MediCarePro.API.Controllers
 		[HttpPost]
 		public async Task<ActionResult<AccountDto>> Login(LoginDto model)
 		{
-
-            Console.WriteLine("________________________________________");
-            Console.WriteLine(model.Email);
-            Console.WriteLine(model.Password);
-            Console.WriteLine("________________________________________");
             var user = await _userManager.FindByEmailAsync(model.Email);
 
 			if (user == null)

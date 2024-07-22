@@ -48,6 +48,7 @@ namespace MediCarePro.DAL.Data
 
 						await userManager.CreateAsync(physician, "Pa$$w0rd");
 						await userManager.AddToRoleAsync(physician, roles[0]);
+						if (i == 0) await userManager.AddToRoleAsync(physician , roles[2]);
 
 						var PhysicianSchedule = new PhysicianSchedule()
 						{
