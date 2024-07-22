@@ -1,4 +1,5 @@
-﻿using MediCarePro.API.Errors;
+﻿using AutoMapper;
+using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
 using MediCarePro.BLL.ReceptionScreenService;
 using MediCarePro.DAL.Data.Entities;
@@ -15,13 +16,19 @@ namespace MediCarePro.API.Controllers
 	{
 		private readonly UserManager<Account> _userManager;
 		private readonly IReceptionScreenService _receptionScreenService;
+		private readonly RoleManager<IdentityRole> _roleManager;
+		private readonly IMapper _mapper;
 
 		public UserCreationScreenController(
 			UserManager<Account> userManager,
-			IReceptionScreenService receptionScreenService)
+			IReceptionScreenService receptionScreenService,
+			RoleManager<IdentityRole> roleManager,
+			IMapper mapper)
 		{
 			_userManager = userManager;
 			_receptionScreenService = receptionScreenService;
+			_roleManager = roleManager;
+			_mapper = mapper;
 		}
 
 		[HttpPost("CreateUser")]
@@ -40,7 +47,7 @@ namespace MediCarePro.API.Controllers
 				Email = model.Email,
 			};
 
-			if(model.Roles.Contains("Physician")) model.SpecialtyId = model.SpecialtyId.Value;
+			if(model.Roles.Contains("Physician")) account.SpecialtyId = model.SpecialtyId.Value;
 
 			var result = await _userManager.CreateAsync(account, $"{model.Email.Split('@')[0]}@Pa$$w0rd");
 
@@ -59,6 +66,14 @@ namespace MediCarePro.API.Controllers
 			var Specialties = await _receptionScreenService.GetSpecialtiesAsync();
 
 			return Ok(Specialties);
+		}
+
+		[HttpGet("Role")]
+		public async Task<ActionResult<IReadOnlyList<RoleDto>>> GetRoles()
+		{
+			var roles = await _roleManager.Roles.ToListAsync();
+
+			return Ok(_mapper.Map<IReadOnlyList<RoleDto>>(roles));
 		}
 	}
 }

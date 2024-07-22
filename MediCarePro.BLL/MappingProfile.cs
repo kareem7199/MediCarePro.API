@@ -2,6 +2,7 @@
 using MediCarePro.BLL.Dtos;
 using MediCarePro.BLL.Resolvers;
 using MediCarePro.DAL.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace MediCarePro.BLL
 {
@@ -27,6 +28,8 @@ namespace MediCarePro.BLL
 			CreateMap<Visit, VisitReportDto>()
 					.ForMember(D => D.PatientName, O => O.MapFrom(S => S.Patient.Name))
 					.ForMember(D => D.PhysicanName , O => O.MapFrom(S => $"{S.Physician.FirstName} {S.Physician.SecondName}"));
+
+			CreateMap<IdentityRole, RoleDto>();
 		}
 	}
 }
