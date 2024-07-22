@@ -8,6 +8,7 @@ using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace MediCarePro.BLL.AuthService
 {
@@ -33,11 +34,12 @@ namespace MediCarePro.BLL.AuthService
 				new Claim(ClaimTypes.Name , user.UserName)
 			};
 
+			string rolesJson = JsonConvert.SerializeObject(roles);
+			authClaims.Add(new Claim(ClaimTypes.Role, rolesJson, JsonClaimValueTypes.JsonArray));
 			// Add roles as claims
-			foreach (var role in roles)
-			{
-				authClaims.Add(new Claim(ClaimTypes.Role, role));
-			}
+			//foreach (var role in roles)
+			//{
+			//}
 
 			var authKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:AuthKey"] ?? string.Empty));
 
