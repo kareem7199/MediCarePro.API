@@ -10,9 +10,9 @@ namespace MediCarePro.BLL.Dtos
 	{
         public int Id { get; set; }
         public decimal PhysicanFees { get; set; }
-        public string? Diagnosis { get; set; }
         public int PatientId { get; set; }
         public string PatientName { get; set; } = null!;
+        public IReadOnlyList<DiagnosisToReturnDto> Diagnoses { get; set; }
         public DateTime Date { get; set; }
     }
 }

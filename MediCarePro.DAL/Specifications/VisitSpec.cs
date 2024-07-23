@@ -10,9 +10,10 @@ namespace MediCarePro.DAL.Specifications
 	public class VisitSpec : BaseSpecifications<Visit>
 	{
         public VisitSpec(string physicianId, DateTime from, DateTime to)
-            :base(V => V.AccountId == physicianId && V.Date >= from && V.Date <= to)
+            :base(V => V.AccountId == physicianId && V.Date >= from && V.Date <= to)     
         {
             Includes.Add(V => V.Patient);
+            Includes.Add(V => V.Diagnoses);
             OrderBy = V => V.Date;
         }
 

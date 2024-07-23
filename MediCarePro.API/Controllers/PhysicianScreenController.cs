@@ -3,6 +3,7 @@ using AutoMapper;
 using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
 using MediCarePro.BLL.VisitService;
+using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,16 +46,18 @@ namespace MediCarePro.API.Controllers
 			return Ok(_mapper.Map<VisitReportDto>(visit));
 		}
 
-		[HttpPatch("Visit")]
-		public async Task<ActionResult<DailyVisitToReturnDto>> UpdateVisitDiagnosis(UpdateVisitDto model)
+		[HttpPost("Visit")]
+		public async Task<ActionResult<DiagnosisToReturnDto>> UpdateVisitDiagnosis(DiagnosisDto model)
 		{
 			var physicianId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-			var updatedVisit = await _visitService.UpdateVisitDiagnosisAsync(model.Id, model.Diagnosis, physicianId);
+			var mappedDiagnosis = _mapper.Map<Diagnosis>(model);
 
-			if (updatedVisit is null) return NotFound(new ApiResponse(404, "Visit not found."));
+			var diagnosis = await _visitService.CreateDiagnosisAsync(mappedDiagnosis , physicianId);
 
-			return Ok(_mapper.Map<DailyVisitToReturnDto>(updatedVisit));
+			if (diagnosis is null) return NotFound(new ApiResponse(404, "Visit not found."));
+
+			return Ok(_mapper.Map<DiagnosisToReturnDto>(diagnosis));
 		}
 	}
 }

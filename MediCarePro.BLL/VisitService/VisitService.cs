@@ -38,21 +38,21 @@ namespace MediCarePro.BLL.VisitService
 			return visit;
 		}
 
-		public async Task<Visit?> UpdateVisitDiagnosisAsync(int VisitId, string diagnosis , string physicianId)
-		{
-			var visitRepo = _unitOfWork.Repository<Visit>();
+		//public async Task<Visit?> UpdateVisitDiagnosisAsync(int VisitId, string diagnosis , string physicianId)
+		//{
+		//	var visitRepo = _unitOfWork.Repository<Visit>();
 
-			var visit = await visitRepo.GetAsync(VisitId);
+		//	var visit = await visitRepo.GetAsync(VisitId);
 
-			if (visit is null || visit.AccountId != physicianId) return null;
+		//	if (visit is null || visit.AccountId != physicianId) return null;
 
-			visit.Diagnosis = diagnosis;
+		//	visit.Diagnosis = diagnosis;
 
-			visitRepo.Update(visit);
-			await _unitOfWork.CompleteAsync();
+		//	visitRepo.Update(visit);
+		//	await _unitOfWork.CompleteAsync();
 
-			return visit;
-		}
+		//	return visit;
+		//}
 
 		public async Task<Visit?> GetVisitByIdAsync(int VisitId, string physicianId)
 		{
@@ -65,6 +65,22 @@ namespace MediCarePro.BLL.VisitService
 			if (visit is null || visit.AccountId != physicianId) return null;
 
 			return visit;
+		}
+
+		public async Task<Diagnosis?> CreateDiagnosisAsync(Diagnosis diagnosis , string physicianId)
+		{
+			var visitRepo = _unitOfWork.Repository<Visit>();
+			var diagnosisRepo = _unitOfWork.Repository<Diagnosis>();
+
+
+			var visit = await visitRepo.GetAsync(diagnosis.VisitId);
+
+			if (visit is null || visit.AccountId != physicianId) return null;
+
+			diagnosisRepo.Add(diagnosis);
+			await _unitOfWork.CompleteAsync();
+
+			return diagnosis;
 		}
 	}
 }

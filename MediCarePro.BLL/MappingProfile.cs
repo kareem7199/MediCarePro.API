@@ -30,6 +30,10 @@ namespace MediCarePro.BLL
 					.ForMember(D => D.PhysicanName , O => O.MapFrom(S => $"{S.Physician.FirstName} {S.Physician.SecondName}"));
 
 			CreateMap<IdentityRole, RoleDto>();
+
+			CreateMap<DiagnosisDto, Diagnosis>();
+
+			CreateMap<Diagnosis, DiagnosisToReturnDto>();
 		}
 	}
 }
