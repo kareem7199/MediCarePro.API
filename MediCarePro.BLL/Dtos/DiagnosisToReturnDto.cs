@@ -12,6 +12,7 @@ namespace MediCarePro.BLL.Dtos
         public int Id { get; set; }
 		public string BoneName { get; set; }
 		public double Fees { get; set; }
+		public string Procedure { get; set; }
 		public string DiagnosisDetails { get; set; }
 	}
 }

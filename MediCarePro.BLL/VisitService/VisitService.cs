@@ -82,5 +82,27 @@ namespace MediCarePro.BLL.VisitService
 
 			return diagnosis;
 		}
+
+		public async Task<Diagnosis?> UpdateVisitDiagnosisAsync(Diagnosis diagnosis, string physicianId)
+		{
+			var diagnosisRepo = _unitOfWork.Repository<Diagnosis>();
+
+			var visit = await GetVisitByIdAsync(diagnosis.VisitId, physicianId);
+
+			if (visit is null || visit.AccountId != physicianId) return null;
+
+			var existingDiagnosis = await diagnosisRepo.GetAsync(diagnosis.Id);
+
+			if (existingDiagnosis is null || diagnosis.BoneName != existingDiagnosis.BoneName) return null;
+
+			existingDiagnosis.DiagnosisDetails = diagnosis.DiagnosisDetails;
+			existingDiagnosis.Procedure = diagnosis.Procedure;
+			existingDiagnosis.Fees = diagnosis.Fees;
+
+			diagnosisRepo.Update(existingDiagnosis);
+			await _unitOfWork.CompleteAsync();
+
+			return existingDiagnosis;
+		}
 	}
 }

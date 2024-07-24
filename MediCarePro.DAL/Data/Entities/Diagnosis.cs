@@ -12,7 +12,8 @@ namespace MediCarePro.DAL.Data.Entities
         public int VisitId { get; set; }
 		public string DiagnosisDetails { get; set; }
         public string BoneName { get; set; }
-		public double Fees { get; set; }
+        public string Procedure { get; set; }
+        public double Fees { get; set; }
         public Visit Visit { get; set; }
     }
 }

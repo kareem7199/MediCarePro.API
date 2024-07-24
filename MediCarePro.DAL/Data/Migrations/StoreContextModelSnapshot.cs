@@ -120,6 +120,10 @@ namespace MediCarePro.DAL.Data.Migrations
                     b.Property<decimal>("Fees")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Procedure")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("VisitId")
                         .HasColumnType("int");
 

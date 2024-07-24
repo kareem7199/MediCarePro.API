@@ -47,7 +47,7 @@ namespace MediCarePro.API.Controllers
 		}
 
 		[HttpPost("Visit")]
-		public async Task<ActionResult<DiagnosisToReturnDto>> UpdateVisitDiagnosis(DiagnosisDto model)
+		public async Task<ActionResult<DiagnosisToReturnDto>> AddVisitDiagnosis(DiagnosisDto model)
 		{
 			var physicianId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
@@ -56,6 +56,21 @@ namespace MediCarePro.API.Controllers
 			var diagnosis = await _visitService.CreateDiagnosisAsync(mappedDiagnosis , physicianId);
 
 			if (diagnosis is null) return NotFound(new ApiResponse(404, "Visit not found."));
+
+			return Ok(_mapper.Map<DiagnosisToReturnDto>(diagnosis));
+		}
+
+		[HttpPatch("Visit/{id}")]
+		public async Task<ActionResult<DiagnosisToReturnDto>> UpdateVisitDiagnosis(DiagnosisDto model , int id)
+		{
+			var physicianId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+			var mappedDiagnosis = _mapper.Map<Diagnosis>(model);
+			mappedDiagnosis.Id = id;
+
+			var diagnosis = await _visitService.UpdateVisitDiagnosisAsync(mappedDiagnosis , physicianId);
+
+			if (diagnosis is null) return NotFound(new ApiResponse(404, "Diagnosis not found."));
 
 			return Ok(_mapper.Map<DiagnosisToReturnDto>(diagnosis));
 		}

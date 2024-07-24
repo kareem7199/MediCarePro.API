@@ -23,6 +23,7 @@ namespace MediCarePro.DAL.Data.Migrations
                     VisitId = table.Column<int>(type: "int", nullable: false),
                     DiagnosisDetails = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BoneName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Procedure = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fees = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>

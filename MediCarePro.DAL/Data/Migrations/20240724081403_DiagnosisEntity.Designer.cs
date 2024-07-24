@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediCarePro.DAL.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20240723125936_DiagnosisEntity")]
+    [Migration("20240724081403_DiagnosisEntity")]
     partial class DiagnosisEntity
     {
         /// <inheritdoc />
@@ -122,6 +122,10 @@ namespace MediCarePro.DAL.Data.Migrations
 
                     b.Property<decimal>("Fees")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Procedure")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VisitId")
                         .HasColumnType("int");
