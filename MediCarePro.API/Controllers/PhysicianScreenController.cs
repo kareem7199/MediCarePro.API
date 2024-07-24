@@ -60,7 +60,7 @@ namespace MediCarePro.API.Controllers
 			return Ok(_mapper.Map<DiagnosisToReturnDto>(diagnosis));
 		}
 
-		[HttpPatch("Visit/{id}")]
+		[HttpPut("Visit/{id}")]
 		public async Task<ActionResult<DiagnosisToReturnDto>> UpdateVisitDiagnosis(DiagnosisDto model , int id)
 		{
 			var physicianId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
