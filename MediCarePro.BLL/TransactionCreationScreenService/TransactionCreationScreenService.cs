@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MediCarePro.BLL.TransactionCreationScreenService
 {
-	[Authorize("TransactionCreator")]
 	public class TransactionCreationScreenService : ITransactionCreationScreenService
 	{
 		private readonly IUnitOfWork _unitOfWork;

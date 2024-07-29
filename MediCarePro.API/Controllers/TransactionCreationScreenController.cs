@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediCarePro.API.Controllers
 {
-	[Authorize("")]
+	[Authorize("TransactionCreator")]
 	public class TransactionCreationScreenController : BaseApiController
 	{
 		private readonly ITransactionCreationScreenService _transactionCreationScreenService;
