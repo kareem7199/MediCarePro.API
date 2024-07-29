@@ -4,6 +4,7 @@ using MediCarePro.API.Middlewares;
 using MediCarePro.BLL;
 using MediCarePro.BLL.AccountService;
 using MediCarePro.BLL.AuthService;
+using MediCarePro.BLL.ItemCreationScreenService;
 using MediCarePro.BLL.ReceptionScreenService;
 using MediCarePro.BLL.VisitService;
 using MediCarePro.DAL.Data;
@@ -26,10 +27,11 @@ namespace MediCarePro.API.Extensions
 
 			services.AddScoped(typeof(IAuthService), typeof(AuthService));
 			services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-			services.AddScoped(typeof(IAccountRepository) , typeof(AccountRepository));
-			services.AddScoped(typeof(IReceptionScreenService) , typeof(ReceptionScreenService));
-			services.AddScoped(typeof(IAccountService) , typeof(AccountService));
+			services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
+			services.AddScoped(typeof(IReceptionScreenService), typeof(ReceptionScreenService));
+			services.AddScoped(typeof(IAccountService), typeof(AccountService));
 			services.AddScoped(typeof(IVisitService), typeof(VisitService));
+			services.AddScoped(typeof(IItemCreationScreenService), typeof(ItemCreationScreenService));
 
 			services.AddScoped<ExceptionMiddleware>();
 
@@ -63,6 +65,7 @@ namespace MediCarePro.API.Extensions
 				options.AddPolicy("Physician", policy => policy.RequireRole("Physician"));
 				options.AddPolicy("Reception", policy => policy.RequireRole("Reception"));
 				options.AddPolicy("UserCreator", policy => policy.RequireRole("UserCreator"));
+				options.AddPolicy("ItemCreator", policy => policy.RequireRole("ItemCreator"));
 			});
 
 			services.AddAuthentication(options =>

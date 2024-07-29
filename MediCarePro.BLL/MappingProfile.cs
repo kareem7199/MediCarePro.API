@@ -34,6 +34,8 @@ namespace MediCarePro.BLL
 			CreateMap<DiagnosisDto, Diagnosis>();
 
 			CreateMap<Diagnosis, DiagnosisToReturnDto>();
+
+			CreateMap<CreateItemDto, Item>();
 		}
 	}
 }
