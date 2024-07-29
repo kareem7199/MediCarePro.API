@@ -11,5 +11,6 @@ namespace MediCarePro.BLL.TransactionCreationScreenService
 	public interface ITransactionCreationScreenService
 	{
 		public Task<Transaction?> CreateTransactionAsync(decimal amount , int quantity , TransactionActionDto action , int itemId);
+		public Task<IReadOnlyList<Item>> GetItemsAsync();
 	}
 }

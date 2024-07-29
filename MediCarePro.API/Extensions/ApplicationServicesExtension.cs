@@ -68,6 +68,7 @@ namespace MediCarePro.API.Extensions
 				options.AddPolicy("Reception", policy => policy.RequireRole("Reception"));
 				options.AddPolicy("UserCreator", policy => policy.RequireRole("UserCreator"));
 				options.AddPolicy("ItemCreator", policy => policy.RequireRole("ItemCreator"));
+				options.AddPolicy("TransactionCreator", policy => policy.RequireRole("TransactionCreator"));
 			});
 
 			services.AddAuthentication(options =>

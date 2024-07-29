@@ -6,7 +6,7 @@ namespace MediCarePro.DAL.Data
 {
 	public static class StoreContextSeeder
 	{
-		private static string[] roles = { "Physician", "Reception" , "UserCreator" , "ItemCreator" };
+		private static string[] roles = { "Physician", "Reception" , "UserCreator" , "ItemCreator" , "TransactionCreator" };
 
 		public static async Task SeedAsync(UserManager<Account> userManager, StoreContext storeContext)
 		{
@@ -46,6 +46,7 @@ namespace MediCarePro.DAL.Data
 						{
 							await userManager.AddToRoleAsync(physician, roles[2]);
 							await userManager.AddToRoleAsync(physician, roles[3]);
+							await userManager.AddToRoleAsync(physician, roles[4]);
 						}
 
 						var PhysicianSchedule = new PhysicianSchedule()

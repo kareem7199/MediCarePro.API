@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using MediCarePro.BLL.Dtos;
 using MediCarePro.DAL.Data.Entities;
 using MediCarePro.DAL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MediCarePro.BLL.TransactionCreationScreenService
 {
+	[Authorize("TransactionCreator")]
 	public class TransactionCreationScreenService : ITransactionCreationScreenService
 	{
 		private readonly IUnitOfWork _unitOfWork;
@@ -39,6 +41,15 @@ namespace MediCarePro.BLL.TransactionCreationScreenService
 			await _unitOfWork.CompleteAsync();
 
 			return transaction;
+		}
+
+		public async Task<IReadOnlyList<Item>> GetItemsAsync()
+		{
+			var itemRepo = _unitOfWork.Repository<Item>();
+
+			var items = await itemRepo.GetAllAsync();
+
+			return items;
 		}
 	}
 }
