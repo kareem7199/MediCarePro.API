@@ -1,6 +1,8 @@
 ﻿using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
 using MediCarePro.BLL.InventoryService;
+using MediCarePro.BLL.TransactionCreationScreenService;
+using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,22 @@ namespace MediCarePro.API.Controllers
 	public class InventoryAccountingScreenController : BaseApiController
 	{
 		private readonly IInventoryService _inventoryService;
+		private readonly ITransactionCreationScreenService _transactionCreationScreenService;
 
-		public InventoryAccountingScreenController(IInventoryService inventoryService)
+		public InventoryAccountingScreenController(
+			IInventoryService inventoryService,
+			ITransactionCreationScreenService transactionCreationScreenService)
 		{
 			_inventoryService = inventoryService;
+			_transactionCreationScreenService = transactionCreationScreenService;
+		}
+
+		[HttpGet("Item")]
+		public async Task<ActionResult<IReadOnlyList<Item>>> GetItems()
+		{
+			var items = await _transactionCreationScreenService.GetItemsAsync();
+
+			return Ok(items);
 		}
 
 		[HttpGet]
