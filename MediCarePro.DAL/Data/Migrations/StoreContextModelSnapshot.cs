@@ -246,7 +246,7 @@ namespace MediCarePro.DAL.Data.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("Transaction");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Visit", b =>

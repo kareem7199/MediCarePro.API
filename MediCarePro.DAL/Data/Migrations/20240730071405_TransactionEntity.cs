@@ -11,7 +11,7 @@ namespace MediCarePro.DAL.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Transaction",
+                name: "Transactions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,9 +22,9 @@ namespace MediCarePro.DAL.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transaction", x => x.Id);
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transaction_Items_ItemId",
+                        name: "FK_Transactions_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "Id",
@@ -32,8 +32,8 @@ namespace MediCarePro.DAL.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_ItemId",
-                table: "Transaction",
+                name: "IX_Transactions_ItemId",
+                table: "Transactions",
                 column: "ItemId");
         }
 
@@ -41,7 +41,7 @@ namespace MediCarePro.DAL.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Transaction");
+                name: "Transactions");
         }
     }
 }

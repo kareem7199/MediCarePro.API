@@ -29,5 +29,6 @@ namespace MediCarePro.DAL.Data
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

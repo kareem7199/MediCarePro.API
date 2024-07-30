@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediCarePro.DAL.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20240729104009_TransactionEntity")]
+    [Migration("20240730071405_TransactionEntity")]
     partial class TransactionEntity
     {
         /// <inheritdoc />
@@ -249,7 +249,7 @@ namespace MediCarePro.DAL.Data.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("Transaction");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("MediCarePro.DAL.Data.Entities.Visit", b =>

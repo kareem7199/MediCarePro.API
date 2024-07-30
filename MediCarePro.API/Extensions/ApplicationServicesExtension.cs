@@ -4,6 +4,7 @@ using MediCarePro.API.Middlewares;
 using MediCarePro.BLL;
 using MediCarePro.BLL.AccountService;
 using MediCarePro.BLL.AuthService;
+using MediCarePro.BLL.InventoryService;
 using MediCarePro.BLL.ItemCreationScreenService;
 using MediCarePro.BLL.ReceptionScreenService;
 using MediCarePro.BLL.TransactionCreationScreenService;
@@ -34,6 +35,7 @@ namespace MediCarePro.API.Extensions
 			services.AddScoped(typeof(IVisitService), typeof(VisitService));
 			services.AddScoped(typeof(IItemCreationScreenService), typeof(ItemCreationScreenService));
 			services.AddScoped(typeof(ITransactionCreationScreenService) , typeof(TransactionCreationScreenService));
+			services.AddScoped(typeof(IInventoryService), typeof(InventoryService));
 
 			services.AddScoped<ExceptionMiddleware>();
 
@@ -68,7 +70,8 @@ namespace MediCarePro.API.Extensions
 				options.AddPolicy("Reception", policy => policy.RequireRole("Reception"));
 				options.AddPolicy("UserCreator", policy => policy.RequireRole("UserCreator"));
 				options.AddPolicy("ItemCreator", policy => policy.RequireRole("ItemCreator"));
-				options.AddPolicy("TransactionCreator", policy => policy.RequireRole("TransactionCreator"));
+				options.AddPolicy("TransactionCreator", policy => policy.RequireRole("TransactionCreator")); 
+				options.AddPolicy("InventoryManager", policy => policy.RequireRole("InventoryManager"));
 			});
 
 			services.AddAuthentication(options =>
