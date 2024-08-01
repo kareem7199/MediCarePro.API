@@ -6,6 +6,7 @@ using MediCarePro.BLL.Services.AccountService;
 using MediCarePro.BLL.Services.AuthService;
 using MediCarePro.BLL.Services.InventoryService;
 using MediCarePro.BLL.Services.ItemCreationScreenService;
+using MediCarePro.BLL.Services.RabbitMqService;
 using MediCarePro.BLL.Services.ReceptionScreenService;
 using MediCarePro.BLL.Services.TransactionCreationScreenService;
 using MediCarePro.BLL.Services.VisitService;
@@ -20,7 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MediCarePro.API.Extensions
 {
-    public static class ApplicationServicesExtension
+	public static class ApplicationServicesExtension
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
@@ -34,8 +35,9 @@ namespace MediCarePro.API.Extensions
 			services.AddScoped(typeof(IAccountService), typeof(AccountService));
 			services.AddScoped(typeof(IVisitService), typeof(VisitService));
 			services.AddScoped(typeof(IItemCreationScreenService), typeof(ItemCreationScreenService));
-			services.AddScoped(typeof(ITransactionCreationScreenService) , typeof(TransactionCreationScreenService));
+			services.AddScoped(typeof(ITransactionCreationScreenService), typeof(TransactionCreationScreenService));
 			services.AddScoped(typeof(IInventoryService), typeof(InventoryService));
+			services.AddScoped(typeof(IRabbitMqService), typeof(RabbitMqService));
 
 			services.AddScoped<ExceptionMiddleware>();
 
@@ -70,7 +72,7 @@ namespace MediCarePro.API.Extensions
 				options.AddPolicy("Reception", policy => policy.RequireRole("Reception"));
 				options.AddPolicy("UserCreator", policy => policy.RequireRole("UserCreator"));
 				options.AddPolicy("ItemCreator", policy => policy.RequireRole("ItemCreator"));
-				options.AddPolicy("TransactionCreator", policy => policy.RequireRole("TransactionCreator")); 
+				options.AddPolicy("TransactionCreator", policy => policy.RequireRole("TransactionCreator"));
 				options.AddPolicy("InventoryManager", policy => policy.RequireRole("InventoryManager"));
 			});
 

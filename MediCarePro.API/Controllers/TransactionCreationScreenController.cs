@@ -1,6 +1,7 @@
 ﻿using System.Transactions;
 using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
+using MediCarePro.BLL.Services.RabbitMqService;
 using MediCarePro.BLL.Services.TransactionCreationScreenService;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +14,14 @@ namespace MediCarePro.API.Controllers
 	public class TransactionCreationScreenController : BaseApiController
 	{
 		private readonly ITransactionCreationScreenService _transactionCreationScreenService;
+		private readonly IRabbitMqService _rabbitMqService;
 
 		public TransactionCreationScreenController(
-			ITransactionCreationScreenService transactionCreationScreenService)
+			ITransactionCreationScreenService transactionCreationScreenService,
+			IRabbitMqService rabbitMqService)
 		{
 			_transactionCreationScreenService = transactionCreationScreenService;
+			_rabbitMqService = rabbitMqService;
 		}
 
 		[HttpPost("Transaction")]
@@ -26,6 +30,8 @@ namespace MediCarePro.API.Controllers
 			var transaction = await _transactionCreationScreenService.CreateTransactionAsync(model.Amount, model.Quantity, model.Action, model.ItemId);
 
 			if(transaction is null) return BadRequest(new ApiResponse(400 , "item not found"));
+
+			_rabbitMqService.SendMessage("Transaction Created");
 
 			return Ok(transaction);
 		}
