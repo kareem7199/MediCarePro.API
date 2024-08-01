@@ -1,7 +1,7 @@
 ﻿using System.Transactions;
 using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
-using MediCarePro.BLL.TransactionCreationScreenService;
+using MediCarePro.BLL.Services.TransactionCreationScreenService;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediCarePro.API.Controllers
 {
-	[Authorize("TransactionCreator")]
+    [Authorize("TransactionCreator")]
 	public class TransactionCreationScreenController : BaseApiController
 	{
 		private readonly ITransactionCreationScreenService _transactionCreationScreenService;

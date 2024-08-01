@@ -2,13 +2,13 @@
 using MediCarePro.API.Errors;
 using MediCarePro.API.Middlewares;
 using MediCarePro.BLL;
-using MediCarePro.BLL.AccountService;
-using MediCarePro.BLL.AuthService;
-using MediCarePro.BLL.InventoryService;
-using MediCarePro.BLL.ItemCreationScreenService;
-using MediCarePro.BLL.ReceptionScreenService;
-using MediCarePro.BLL.TransactionCreationScreenService;
-using MediCarePro.BLL.VisitService;
+using MediCarePro.BLL.Services.AccountService;
+using MediCarePro.BLL.Services.AuthService;
+using MediCarePro.BLL.Services.InventoryService;
+using MediCarePro.BLL.Services.ItemCreationScreenService;
+using MediCarePro.BLL.Services.ReceptionScreenService;
+using MediCarePro.BLL.Services.TransactionCreationScreenService;
+using MediCarePro.BLL.Services.VisitService;
 using MediCarePro.DAL.Data;
 using MediCarePro.DAL.Data.Entities;
 using MediCarePro.DAL.Interfaces;
@@ -20,7 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MediCarePro.API.Extensions
 {
-	public static class ApplicationServicesExtension
+    public static class ApplicationServicesExtension
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{

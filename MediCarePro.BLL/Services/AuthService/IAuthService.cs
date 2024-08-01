@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using MediCarePro.DAL.Data.Entities;
 
-namespace MediCarePro.BLL.ItemCreationScreenService
+namespace MediCarePro.BLL.Services.AuthService
 {
-	public interface IItemCreationScreenService
-	{
-		public Task<Item?> CreateItemAsync(Item item);
-	}
+    public interface IAuthService
+    {
+        Task<string> CreateTokenAsync(Account user);
+    }
 }

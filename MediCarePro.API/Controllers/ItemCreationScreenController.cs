@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
-using MediCarePro.BLL.ItemCreationScreenService;
+using MediCarePro.BLL.Services.ItemCreationScreenService;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediCarePro.API.Controllers
 {
-	[Authorize("ItemCreator")]
+    [Authorize("ItemCreator")]
 	public class ItemCreationScreenController : BaseApiController
 	{
 		private readonly IMapper _mapper;

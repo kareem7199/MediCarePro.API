@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
-using MediCarePro.BLL.ReceptionScreenService;
+using MediCarePro.BLL.Services.ReceptionScreenService;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediCarePro.API.Controllers
 {
-	[Authorize(Roles = "UserCreator")]
+    [Authorize(Roles = "UserCreator")]
 	public class UserCreationScreenController : BaseApiController
 	{
 		private readonly UserManager<Account> _userManager;

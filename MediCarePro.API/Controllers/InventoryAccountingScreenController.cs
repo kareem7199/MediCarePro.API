@@ -1,14 +1,14 @@
 ﻿using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
-using MediCarePro.BLL.InventoryService;
-using MediCarePro.BLL.TransactionCreationScreenService;
+using MediCarePro.BLL.Services.InventoryService;
+using MediCarePro.BLL.Services.TransactionCreationScreenService;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediCarePro.API.Controllers
 {
-	[Authorize("InventoryManager")]
+    [Authorize("InventoryManager")]
 	public class InventoryAccountingScreenController : BaseApiController
 	{
 		private readonly IInventoryService _inventoryService;

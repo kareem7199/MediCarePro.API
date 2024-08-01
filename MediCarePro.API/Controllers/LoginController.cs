@@ -1,6 +1,6 @@
 ﻿using MediCarePro.API.Errors;
-using MediCarePro.BLL.AuthService;
 using MediCarePro.BLL.Dtos;
+using MediCarePro.BLL.Services.AuthService;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediCarePro.API.Controllers
 {
-	public class LoginController : BaseApiController
+    public class LoginController : BaseApiController
 	{
 		private readonly UserManager<Account> _userManager;
 		private readonly SignInManager<Account> _signInManager;

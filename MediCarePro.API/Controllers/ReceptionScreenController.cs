@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediCarePro.API.Errors;
 using MediCarePro.API.Hubs;
-using MediCarePro.BLL.AccountService;
 using MediCarePro.BLL.Dtos;
-using MediCarePro.BLL.ReceptionScreenService;
-using MediCarePro.BLL.VisitService;
+using MediCarePro.BLL.Services.AccountService;
+using MediCarePro.BLL.Services.ReceptionScreenService;
+using MediCarePro.BLL.Services.VisitService;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +14,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MediCarePro.API.Controllers
 {
-	[Authorize(Roles = "Reception")]
+    [Authorize(Roles = "Reception")]
 	public class ReceptionScreenController : BaseApiController
 	{
 		private readonly IReceptionScreenService _receptionScreenService;

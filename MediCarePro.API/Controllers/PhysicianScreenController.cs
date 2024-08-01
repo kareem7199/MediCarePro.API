@@ -2,7 +2,7 @@
 using AutoMapper;
 using MediCarePro.API.Errors;
 using MediCarePro.BLL.Dtos;
-using MediCarePro.BLL.VisitService;
+using MediCarePro.BLL.Services.VisitService;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediCarePro.API.Controllers
 {
-	[Authorize(Roles = "Physician")]
+    [Authorize(Roles = "Physician")]
 	public class PhysicianScreenController : BaseApiController
 	{
 		private readonly IVisitService _visitService;
