@@ -1,14 +1,16 @@
 ﻿using System.Text.Json;
 using MediCarePro.DAL.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using Nest;
+using Day = MediCarePro.DAL.Data.Entities.Day;
 
 namespace MediCarePro.DAL.Data
 {
 	public static class StoreContextSeeder
 	{
-		private static string[] roles = { "Physician", "Reception" , "UserCreator" , "ItemCreator" , "TransactionCreator" , "InventoryManager" };
+		private static string[] roles = { "Physician", "Reception", "UserCreator", "ItemCreator", "TransactionCreator", "InventoryManager" };
 
-		public static async Task SeedAsync(UserManager<Account> userManager, StoreContext storeContext)
+		public static async Task SeedAsync(UserManager<Account> userManager, StoreContext storeContext, ElasticClient elasticClient)
 		{
 
 			if (!storeContext.Specialties.Any())
@@ -108,6 +110,12 @@ namespace MediCarePro.DAL.Data
 						await storeContext.AddAsync(Patient);
 					}
 					await storeContext.SaveChangesAsync();
+
+					foreach (var Patient in Patients)
+					{
+						var result = await elasticClient.IndexAsync(Patient, idx => idx
+						.Index("patients"));
+                    }
 				}
 			}
 		}
@@ -120,6 +128,33 @@ namespace MediCarePro.DAL.Data
 				if (!await roleManager.RoleExistsAsync(roleName))
 				{
 					await roleManager.CreateAsync(new IdentityRole(roleName));
+				}
+			}
+		}
+
+		public static async Task SeedIndicesAsync(ElasticClient client)
+		{
+			var indexExistsResponse = await client.Indices.ExistsAsync("patients");
+
+			if (!indexExistsResponse.Exists)
+			{
+				var createIndexResponse = await client.Indices.CreateAsync("patients", c => c
+					.Settings(s => s
+						.NumberOfShards(3)
+						.NumberOfReplicas(2)
+					)
+					.Map<Patient>(m => m
+						.AutoMap()
+					)
+				);
+				
+				if (createIndexResponse.IsValid)
+				{
+					Console.WriteLine("Index created successfully.");
+				}
+				else
+				{
+					Console.WriteLine($"Error creating index: {createIndexResponse.DebugInformation}");
 				}
 			}
 		}

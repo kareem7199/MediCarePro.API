@@ -38,6 +38,9 @@ namespace MediCarePro.API.Extensions
 			services.AddScoped(typeof(ITransactionCreationScreenService), typeof(TransactionCreationScreenService));
 			services.AddScoped(typeof(IInventoryService), typeof(InventoryService));
 			services.AddScoped(typeof(IRabbitMqService), typeof(RabbitMqService));
+			services.AddScoped(typeof(IPatientRepository), typeof(PatientRepository));
+
+			services.AddSingleton<ElasticSearchClient>();
 
 			services.AddScoped<ExceptionMiddleware>();
 

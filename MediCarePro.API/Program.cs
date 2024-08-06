@@ -57,6 +57,8 @@ namespace MediCarePro.API
 
 			var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
+			var elasticClient = services.GetRequiredService<ElasticSearchClient>().Client;
+
 			try
 			{
 				await _dbContext.Database.MigrateAsync();
@@ -65,7 +67,8 @@ namespace MediCarePro.API
 				var userManager = services.GetRequiredService<UserManager<Account>>();
 
 				await StoreContextSeeder.SeedRolesAsync(roleManager);
-				await StoreContextSeeder.SeedAsync(userManager , _dbContext);
+				//await StoreContextSeeder.SeedIndicesAsync(elasticClient);
+				await StoreContextSeeder.SeedAsync(userManager , _dbContext , elasticClient);
 			}
 			catch (Exception ex)
 			{
