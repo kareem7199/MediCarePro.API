@@ -9,10 +9,17 @@ namespace Reports.Model
 	{
 		public int Id { get; set; }
 		public decimal PhysicanFees { get; set; }
-		public string Diagnosis { get; set; }
+		public List<Diagnosis> Diagnoses { get; set; }
 		public int PatientId { get; set; }
 		public string PatientName { get; set; }
 		public string PhysicanName { get; set; }
 		public DateTime Date { get; set; }
+	}
+	public class Diagnosis
+	{
+        public decimal Fees { get; set; }
+        public string Procedure { get; set; }
+		public string BoneName { get; set; }
+		public string DiagnosisDetails { get; set; }
 	}
 }

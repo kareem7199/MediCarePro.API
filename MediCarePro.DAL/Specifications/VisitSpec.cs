@@ -22,6 +22,7 @@ namespace MediCarePro.DAL.Specifications
         {
             Includes.Add(V => V.Patient);
             Includes.Add(V => V.Physician);
+            Includes.Add(V => V.Diagnoses);
         }
     }
 }

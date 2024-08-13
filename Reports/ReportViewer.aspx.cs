@@ -36,6 +36,13 @@ namespace Reports
 					dt.Columns.Add("Date", typeof(DateTime));
 					dt.Columns.Add("Diagnosis", typeof(string));
 
+
+					DataTable dt2 = new DataTable();
+					dt2.Columns.Add("BoneName", typeof(string));
+					dt2.Columns.Add("Fees", typeof(decimal));
+					dt2.Columns.Add("Procedure", typeof(string));
+					dt2.Columns.Add("DiagnosisDetails", typeof(string));
+
 					try
 					{
 						// Replace with your API URL
@@ -56,13 +63,25 @@ namespace Reports
 							// Deserialize JSON to a list of objects
 							var data = Newtonsoft.Json.JsonConvert.DeserializeObject<Visit>(jsonString);
 
+							var diagnoses = data.Diagnoses;
+							
+							decimal sum = 0;
 
-							dt.Rows.Add(data.PatientName, data.PhysicanName, data.PhysicanFees, data.Date, data.Diagnosis);
+							foreach(var diagnosis in diagnoses)
+							{
+								dt2.Rows.Add(diagnosis.BoneName, diagnosis.Fees , diagnosis.Procedure , diagnosis.DiagnosisDetails);
+								sum += diagnosis.Fees;
+							}
+
+
+							dt.Rows.Add(data.PatientName, data.PhysicanName, data.PhysicanFees + sum, data.Date);
 
 							ReportDataSource reportDataSource = new ReportDataSource("DataSet1", dt); // Replace "DataSetName" with your dataset name in the RDLC file
+							ReportDataSource reportDataSource2 = new ReportDataSource("DataSet2", dt2); // Replace "DataSetName" with your dataset name in the RDLC file
 
 							ctl14.LocalReport.DataSources.Clear();
 							ctl14.LocalReport.DataSources.Add(reportDataSource);
+							ctl14.LocalReport.DataSources.Add(reportDataSource2);
 
 							// Refresh the report viewer
 							ctl14.LocalReport.Refresh();
