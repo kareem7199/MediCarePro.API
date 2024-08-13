@@ -81,8 +81,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>1.13417in</Top>
-        <Left>2.61458in</Left>
+        <Top>1.17584in</Top>
+        <Left>3.26167in</Left>
         <Height>0.25in</Height>
         <Width>2.36708in</Width>
         <ZIndex>2</ZIndex>
@@ -162,7 +162,7 @@
         </Paragraphs>
         <rd:DefaultName>amount</rd:DefaultName>
         <Top>1.45361in</Top>
-        <Left>2.6007in</Left>
+        <Left>3.26167in</Left>
         <Height>0.25in</Height>
         <Width>2.36708in</Width>
         <ZIndex>4</ZIndex>
@@ -180,7 +180,7 @@
         <Top>1.94667in</Top>
         <Left>0.13417in</Left>
         <Height>0in</Height>
-        <Width>4.8475in</Width>
+        <Width>5.49458in</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -208,8 +208,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox13</rd:DefaultName>
-        <Top>1.97444in</Top>
-        <Left>1.24875in</Left>
+        <Top>2.01611in</Top>
+        <Left>1.57292in</Left>
         <Height>0.375in</Height>
         <Width>2.40625in</Width>
         <ZIndex>6</ZIndex>
@@ -227,16 +227,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.43875in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.20834in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.67833in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.40875in</Width>
+              <Width>1.16917in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -312,7 +312,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>diagnosis Details</Value>
+                              <Value>procedure</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -512,9 +512,9 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet2</DataSetName>
         <Top>2.89458in</Top>
-        <Left>0.57292in</Left>
+        <Left>0.13417in</Left>
         <Height>0.5in</Height>
-        <Width>4.40875in</Width>
+        <Width>5.49458in</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -524,9 +524,34 @@
       </Tablix>
     </ReportItems>
     <Height>5.67708in</Height>
-    <Style />
+    <Style>
+      <Border>
+        <Style>Solid</Style>
+      </Border>
+      <TopBorder>
+        <Color>Black</Color>
+        <Style>Solid</Style>
+        <Width>1pt</Width>
+      </TopBorder>
+      <BottomBorder>
+        <Color>Black</Color>
+        <Style>Solid</Style>
+        <Width>1pt</Width>
+      </BottomBorder>
+      <LeftBorder>
+        <Color>Black</Color>
+        <Style>Solid</Style>
+        <Width>1pt</Width>
+      </LeftBorder>
+      <RightBorder>
+        <Color>Black</Color>
+        <Style>Solid</Style>
+        <Width>1pt</Width>
+      </RightBorder>
+      <BackgroundColor>White</BackgroundColor>
+    </Style>
   </Body>
-  <Width>6.76958in</Width>
+  <Width>5.75917in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>

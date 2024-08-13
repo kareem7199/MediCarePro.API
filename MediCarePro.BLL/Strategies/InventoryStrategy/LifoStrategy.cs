@@ -17,7 +17,7 @@ namespace MediCarePro.BLL.Strategies.InventoryStrategy
 
 			foreach (Transaction transaction in inventory)
 			{
-				if (transaction.Amount >= 0)
+				if (transaction.Amount < 0)
 				{
 					stack.Push(transaction);
 				}
@@ -42,7 +42,7 @@ namespace MediCarePro.BLL.Strategies.InventoryStrategy
 				inventoryValue += (transaction.Quantity * transaction.Amount);
 			}
 
-			return inventoryValue;
+			return Math.Abs(inventoryValue);
 		}
 	}
 }
